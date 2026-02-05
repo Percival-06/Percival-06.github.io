@@ -1,11 +1,22 @@
-# 站点信息
+theme: minima
 title: Percival 的博客
-description: 记录学习与思考
+description: 记录技术成长与生活思考
 author: Percival
 
-# 选择主题（GitHub 官方支持的主题）
-theme: minima
+# 分页设置
+paginate: 5
+paginate_path: "/page:num/"
 
-# 其他配置
+# 显示摘要
+show_excerpts: true
+
+# 插件
+plugins:
+  - jekyll-paginate
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# 其他
 markdown: kramdown
-highlighter: rouge
+permalink: /:year/:month/:day/:title/
+
