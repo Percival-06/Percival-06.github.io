@@ -1,0 +1,11 @@
+# 站点信息
+title: Percival 的博客
+description: 记录学习与思考
+author: Percival
+
+# 选择主题（GitHub 官方支持的主题）
+theme: minima
+
+# 其他配置
+markdown: kramdown
+highlighter: rouge
