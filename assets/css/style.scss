@@ -17,11 +17,17 @@
 // 覆盖 Minima 默认布局
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  background-color: #ffffff;
-  color: #1a1a1a;
+  
+  // 深蓝黑渐变背景
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+  // 或更简单的双色调：background: linear-gradient(to bottom, #0f172a, #1e1b4b);
+  
+  color: #f8fafc;  // 文字改为浅白色，确保对比度
   line-height: 1.6;
   font-size: 16px;
+  min-height: 100vh;
 }
+
 
 // 隐藏默认导航和页脚冗余内容
 .site-header {
@@ -91,50 +97,46 @@ body {
   }
 }
 
-// 大标题样式（首页名字）
+// 首页大标题
 .home-title {
   font-size: 3rem;
   font-weight: 700;
   margin-bottom: 1rem;
   letter-spacing: -0.02em;
+  color: #f8fafc;  // 改为浅白
 }
 
-// 打字机效果容器
+// 打字机文字
 .typewriter-text {
   font-size: 1.25rem;
-  color: #666;
+  color: #94a3b8;  // 改为灰蓝色，柔和对比
   margin-bottom: 2rem;
   min-height: 1.6em;
   
   .cursor {
-    display: inline-block;
-    width: 2px;
-    height: 1.2em;
-    background-color: #1a1a1a;
-    margin-left: 2px;
-    animation: blink 1s infinite;
-    vertical-align: text-bottom;
+    background-color: #f8fafc;  // 光标改为浅白
   }
 }
+
 
 @keyframes blink {
   0%, 50% { opacity: 1; }
   51%, 100% { opacity: 0; }
 }
 
-// 极简导航链接
+// 导航链接
 .minimal-nav {
   margin-top: 2rem;
   
   a {
-    color: #666;
+    color: #94a3b8;  // 默认灰蓝
     text-decoration: none;
     margin: 0 1rem;
     font-size: 0.875rem;
     transition: color 0.2s;
     
     &:hover {
-      color: #1a1a1a;
+      color: #f8fafc;  // 悬停变白
     }
   }
 }
@@ -146,7 +148,7 @@ body {
   left: 50%;
   transform: translateX(-50%);
   font-size: 0.75rem;
-  color: #999;
+  color: #64748b;  // 深灰蓝
 }
 
 // 文章列表页（非首页）
@@ -157,7 +159,7 @@ body {
     font-size: 1.5rem;
     font-weight: 600;
     margin-bottom: 2rem;
-    color: #1a1a1a;
+    color: #f8fafc;  // 标题变白
   }
   
   .post-list {
@@ -171,19 +173,19 @@ body {
     }
     
     .post-meta {
-      color: #999;
+      color: #64748b;  // 日期深灰蓝
       font-size: 0.875rem;
       margin-bottom: 0.25rem;
     }
     
     .post-link {
       font-size: 1.125rem;
-      color: #1a1a1a;
+      color: #f8fafc;  // 链接变白
       text-decoration: none;
       font-weight: 500;
       
       &:hover {
-        color: #666;
+        color: #94a3b8;  // 悬停灰蓝
       }
     }
   }
@@ -201,19 +203,22 @@ body {
       font-weight: 700;
       margin-bottom: 0.5rem;
       letter-spacing: -0.01em;
+      color: #f8fafc;  // 文章标题
     }
     
     .post-meta {
-      color: #999;
+      color: #64748b;  // 日期
       font-size: 0.875rem;
     }
   }
   
   .post-content {
+    color: #e2e8f0;  // 正文浅灰白
     h2, h3 {
       font-weight: 600;
       margin-top: 2rem;
       margin-bottom: 1rem;
+      color: #f8fafc;  // 小标题
     }
     
     p {
@@ -221,12 +226,12 @@ body {
     }
     
     a {
-      color: #1a1a1a;
+      color: #60a5fa;  // 链接用亮蓝色突出
       text-decoration: underline;
       text-underline-offset: 0.2em;
       
       &:hover {
-        color: #666;
+        color: #93c5fd;  // 悬停更亮
       }
     }
     
@@ -251,12 +256,12 @@ body {
 .back-link {
   display: inline-block;
   margin-bottom: 2rem;
-  color: #666;
+  color: #94a3b8;
   text-decoration: none;
   font-size: 0.875rem;
   
   &:hover {
-    color: #1a1a1a;
+    color: #f8fafc;
   }
 }
 
