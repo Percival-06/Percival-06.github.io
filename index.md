@@ -3,6 +3,9 @@ layout: default
 ---
 
 <div class="home-layout">
+    <!-- 头像/图片 -->
+    <img src="/assets/images/avatar.jpg" alt="Percival" class="avatar">
+    
     <h1>Percival</h1>
     
     <p class="typewriter-text" id="typewriter">
@@ -14,6 +17,9 @@ layout: default
         <a href="/about/">关于</a>
         <a href="https://github.com/percival-06" target="_blank">GitHub</a>
     </nav>
+    
+    <!-- 添加的描述文字 -->
+    <p class="tagline">记录技术，分享思考，保持好奇</p>
 </div>
 
 <footer class="minimal-footer">© {{ site.time | date: "%Y" }} {{ site.title }}</footer>
