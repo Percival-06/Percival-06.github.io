@@ -1,22 +1,27 @@
-theme: minima
-title: Percival 的博客
-description: 记录技术成长与生活思考
+# 基础信息
+title: Percival
+description: 开发者 / 创作者 / 终身学习者
 author: Percival
 
-# 分页设置
-paginate: 5
-paginate_path: "/page:num/"
+# 主题（保留用于文章功能，但样式已覆盖）
+theme: minima
 
-# 显示摘要
-show_excerpts: true
+# 构建设置
+markdown: kramdown
+permalink: /:year/:month/:day/:title/
+show_excerpts: false
+
+# 分页（可选，文章多的时候启用）
+# paginate: 10
+# paginate_path: "/page:num/"
 
 # 插件
 plugins:
-  - jekyll-paginate
   - jekyll-feed
   - jekyll-seo-tag
+  # - jekyll-paginate
 
-# 其他
-markdown: kramdown
-permalink: /:year/:month/:day/:title/
-
+# 排除文件
+exclude:
+  - README.md
+  - backup/
