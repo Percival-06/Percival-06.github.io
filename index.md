@@ -19,7 +19,7 @@ layout: default
     </nav>
     
     <!-- 添加的描述文字 -->
-    <p class="tagline">keep calm and carry on</p>
+    <p class="tagline">记录技术，分享思考，保持好奇</p>
 </div>
 
 <footer class="minimal-footer">© {{ site.time | date: "%Y" }} {{ site.title }}</footer>
