@@ -44,6 +44,18 @@ function Assert-Matches {
     }
 }
 
+function Assert-NotMatches {
+    param(
+        [string]$Content,
+        [string]$Pattern,
+        [string]$Message
+    )
+
+    if ([regex]::IsMatch($Content, $Pattern, $script:regexOptions)) {
+        throw $Message
+    }
+}
+
 function Get-SectionByClass {
     param(
         [string]$Content,
@@ -127,14 +139,31 @@ Assert-Contains $education '2025 - 至今' "Education dates are missing."
 $skills = Get-SectionById $index 'skills'
 Assert-Matches $skills '<li\b[^>]*>\s*C\+\+\s*</li>' "C++ skill is missing."
 
-Assert-Contains $style ".home-page" "Homepage page-shell styles are missing."
-Assert-Contains $style ".profile-intro" "Profile introduction styles are missing."
-Assert-Contains $style ".home-section" "Homepage section styles are missing."
-Assert-Contains $style ".home-post-link" "Recent-post row styles are missing."
-Assert-Contains $style ".education-item" "Education styles are missing."
-Assert-Contains $style ".skill-list" "Skill styles are missing."
-Assert-Contains $style "@media (prefers-reduced-motion: reduce)" "Reduced-motion support must remain available."
-Assert-NotContains $style ".typewriter-text" "Legacy typewriter styles must be removed."
-Assert-NotContains $style "@keyframes blink" "Legacy cursor animation must be removed."
+$styleForChecks = [regex]::Replace($style, '/\*.*?\*/', '', $regexOptions)
+$styleForChecks = [regex]::Replace(
+    $styleForChecks,
+    '(?m)^[ \t]*//[^\r\n]*(?:\r?\n|$)',
+    ''
+)
+
+Assert-Matches $styleForChecks '(?m)^\s*\.home-page(?![-\w])\s*\{' "Homepage page-shell styles are missing."
+Assert-Matches $styleForChecks '(?m)^\s*\.profile-intro(?![-\w])\s*\{' "Profile introduction styles are missing."
+Assert-Matches $styleForChecks '(?m)^\s*\.home-section(?![-\w])\s*\{' "Homepage section styles are missing."
+Assert-Matches $styleForChecks '(?m)^\s*\.home-post-link(?![-\w])\s*\{' "Recent-post row styles are missing."
+Assert-Matches $styleForChecks '(?m)^\s*\.education-item(?![-\w])\s*\{' "Education styles are missing."
+Assert-Matches $styleForChecks '(?m)^\s*\.skill-list(?![-\w])\s*\{' "Skill styles are missing."
+Assert-Contains $styleForChecks "@media (prefers-reduced-motion: reduce)" "Reduced-motion support must remain available."
+
+Assert-NotMatches $styleForChecks '(?m)^\s*\.home-layout(?![-\w])[^\r\n,{]*\{' "Legacy homepage layout styles must be removed."
+Assert-NotMatches $styleForChecks '(?m)^\s*\.typewriter-text(?![-\w])[^\r\n,{]*\{' "Legacy typewriter styles must be removed."
+Assert-NotMatches $styleForChecks '(?m)^\s*\.cursor(?![-\w])[^\r\n,{]*\{' "Legacy cursor styles must be removed."
+Assert-NotMatches $styleForChecks '(?m)^\s*\.tagline(?![-\w])[^\r\n,{]*\{' "Legacy tagline styles must be removed."
+Assert-NotMatches $styleForChecks '(?m)^\s*\.minimal-nav(?![-\w])[^\r\n,{]*\{' "Legacy minimal navigation styles must be removed."
+Assert-NotMatches $styleForChecks '(?m)^\s*\.minimal-footer(?![-\w])[^\r\n,{]*\{' "Legacy minimal footer styles must be removed."
+Assert-NotMatches $styleForChecks '(?m)^\s*@keyframes\s+blink\b\s*\{' "Legacy cursor animation must be removed."
+
+Assert-Matches $styleForChecks '(?m)^\s*\.profile-meta\s+a:hover\s*\{[^}]*\bcolor\s*:\s*var\(--primary-hover\)\s*;[^}]*\}' "Profile metadata hover must use the high-contrast primary color."
+Assert-Matches $styleForChecks '(?m)^\s*\.home-section-heading\s+a:hover\s*\{[^}]*\bcolor\s*:\s*var\(--primary-hover\)\s*;[^}]*\}' "Homepage section link hover must use the high-contrast primary color."
+Assert-Matches $styleForChecks '(?m)^\s*\.home-post-link:hover\s+span\s*\{[^}]*\bcolor\s*:\s*var\(--primary-hover\)\s*;[^}]*\}' "Homepage post hover must use the high-contrast primary color."
 
 Write-Output "PASS: homepage content contract"
