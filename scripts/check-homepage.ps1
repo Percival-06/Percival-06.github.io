@@ -3,6 +3,8 @@ $ErrorActionPreference = "Stop"
 $projectRoot = Split-Path -Parent $PSScriptRoot
 $indexPath = Join-Path $projectRoot "index.md"
 $index = Get-Content -Raw -Encoding utf8 $indexPath
+$stylePath = Join-Path $projectRoot "assets/css/style.scss"
+$style = Get-Content -Raw -Encoding utf8 $stylePath
 $regexOptions = [System.Text.RegularExpressions.RegexOptions]::IgnoreCase -bor
     [System.Text.RegularExpressions.RegexOptions]::Singleline
 
@@ -124,5 +126,15 @@ Assert-Contains $education '2025 - 至今' "Education dates are missing."
 
 $skills = Get-SectionById $index 'skills'
 Assert-Matches $skills '<li\b[^>]*>\s*C\+\+\s*</li>' "C++ skill is missing."
+
+Assert-Contains $style ".home-page" "Homepage page-shell styles are missing."
+Assert-Contains $style ".profile-intro" "Profile introduction styles are missing."
+Assert-Contains $style ".home-section" "Homepage section styles are missing."
+Assert-Contains $style ".home-post-link" "Recent-post row styles are missing."
+Assert-Contains $style ".education-item" "Education styles are missing."
+Assert-Contains $style ".skill-list" "Skill styles are missing."
+Assert-Contains $style "@media (prefers-reduced-motion: reduce)" "Reduced-motion support must remain available."
+Assert-NotContains $style ".typewriter-text" "Legacy typewriter styles must be removed."
+Assert-NotContains $style "@keyframes blink" "Legacy cursor animation must be removed."
 
 Write-Output "PASS: homepage content contract"

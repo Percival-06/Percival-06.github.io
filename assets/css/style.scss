@@ -163,19 +163,25 @@ button:focus-visible {
   width: 100%;
 }
 
-.home-layout {
+.home-page {
+  width: min(100%, 720px);
+  margin: 0 auto;
+  padding: 3rem 1.5rem 2.5rem;
+  animation: fade-in-up 320ms ease both;
+}
+
+.profile-intro {
   display: flex;
-  min-height: calc(100vh - 5rem);
-  padding: 4rem 1.5rem 6rem;
+  min-height: min(58vh, 32rem);
+  padding: 2rem 0 3.5rem;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  animation: fade-in-up 320ms ease both;
 }
 
-.home-layout h1 {
-  margin-bottom: 0.625rem;
+.profile-intro h1 {
+  margin-bottom: 0.5rem;
   font-size: 2.5rem;
   font-weight: 700;
   letter-spacing: 0;
@@ -185,7 +191,7 @@ button:focus-visible {
 .avatar {
   width: 7rem;
   height: 7rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
   padding: 0.25rem;
   border: 1px solid var(--border);
   border-radius: 50%;
@@ -193,39 +199,141 @@ button:focus-visible {
   object-fit: cover;
 }
 
-.typewriter-text {
-  min-height: 1.7em;
-  margin-bottom: 1.25rem;
+.profile-role {
   color: var(--muted-foreground);
-  font-size: 1.125rem;
+  font-size: 1rem;
 }
 
-.cursor {
-  display: inline-block;
-  width: 2px;
-  height: 1.1em;
-  margin-left: 3px;
-  background: var(--foreground);
-  vertical-align: text-bottom;
-  animation: blink 1s infinite;
+.profile-meta {
+  display: flex;
+  margin-top: 0.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
 }
 
-.tagline {
-  color: var(--muted-foreground);
-  font-size: 0.9rem;
-  font-style: normal;
+.profile-meta a {
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+
+.profile-meta a:hover {
+  color: var(--primary);
+}
+
+.home-section {
+  padding: 2.75rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.home-section h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
   letter-spacing: 0;
+  line-height: 1.4;
 }
 
-.minimal-nav {
-  display: none;
+.home-section-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
-.minimal-footer {
-  margin-top: -3.5rem;
-  padding: 0 1.5rem 2rem;
+.home-section-heading a {
   color: var(--muted-foreground);
-  font-size: 0.75rem;
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+
+.home-section-heading a:hover {
+  color: var(--primary);
+}
+
+.home-prose {
+  margin-top: 1rem;
+  color: var(--muted-foreground);
+}
+
+.home-prose p + p {
+  margin-top: 0.5rem;
+}
+
+.home-post-list {
+  margin-top: 1rem;
+  list-style: none;
+}
+
+.home-post-list li + li {
+  border-top: 1px solid var(--border);
+}
+
+.home-post-link {
+  display: grid;
+  min-height: 3.25rem;
+  padding: 0.75rem 0;
+  grid-template-columns: 7rem minmax(0, 1fr);
+  align-items: baseline;
+  gap: 1rem;
+  text-decoration: none;
+}
+
+.home-post-link time {
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.home-post-link span {
+  min-width: 0;
+  font-weight: 550;
+  overflow-wrap: anywhere;
+  transition: color 160ms ease;
+}
+
+.home-post-link:hover span {
+  color: var(--primary);
+}
+
+.education-item {
+  display: flex;
+  margin-top: 1rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.education-item strong {
+  font-weight: 650;
+}
+
+.education-item p,
+.education-item > span {
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+}
+
+.education-item > span {
+  flex: 0 0 auto;
+}
+
+.skill-list {
+  margin-top: 1rem;
+  list-style: none;
+}
+
+.skill-list li {
+  font-weight: 550;
+}
+
+.home-footer {
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--border);
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
   text-align: center;
 }
 
@@ -377,11 +485,6 @@ button:focus-visible {
   font-size: 0.8rem;
 }
 
-@keyframes blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
-}
-
 @keyframes fade-in-up {
   from {
     opacity: 0;
@@ -415,13 +518,31 @@ button:focus-visible {
     margin-left: 0;
   }
 
-  .home-layout {
-    min-height: calc(100vh - 4.5rem);
-    padding: 3rem 1.25rem 6rem;
+  .home-page {
+    padding: 2rem 1.25rem 2rem;
   }
 
-  .home-layout h1 {
+  .profile-intro {
+    min-height: 54vh;
+    padding: 1.5rem 0 3rem;
+  }
+
+  .profile-intro h1 {
     font-size: 2.125rem;
+  }
+
+  .home-section {
+    padding: 2.25rem 0;
+  }
+
+  .home-post-link {
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+  }
+
+  .education-item {
+    flex-direction: column;
+    gap: 0.35rem;
   }
 
   .page-layout {
