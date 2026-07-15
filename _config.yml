@@ -25,3 +25,4 @@ plugins:
 exclude:
   - README.md
   - backup/
+  - docs/

@@ -5,6 +5,8 @@ $indexPath = Join-Path $projectRoot "index.md"
 $index = Get-Content -Raw -Encoding utf8 $indexPath
 $stylePath = Join-Path $projectRoot "assets/css/style.scss"
 $style = Get-Content -Raw -Encoding utf8 $stylePath
+$configPath = Join-Path $projectRoot "_config.yml"
+$config = Get-Content -Raw -Encoding utf8 $configPath
 $regexOptions = [System.Text.RegularExpressions.RegexOptions]::IgnoreCase -bor
     [System.Text.RegularExpressions.RegexOptions]::Singleline
 
@@ -165,5 +167,7 @@ Assert-NotMatches $styleForChecks '(?m)^\s*@keyframes\s+blink\b\s*\{' "Legacy cu
 Assert-Matches $styleForChecks '(?m)^\s*\.profile-meta\s+a:hover\s*\{[^}]*\bcolor\s*:\s*var\(--primary-hover\)\s*;[^}]*\}' "Profile metadata hover must use the high-contrast primary color."
 Assert-Matches $styleForChecks '(?m)^\s*\.home-section-heading\s+a:hover\s*\{[^}]*\bcolor\s*:\s*var\(--primary-hover\)\s*;[^}]*\}' "Homepage section link hover must use the high-contrast primary color."
 Assert-Matches $styleForChecks '(?m)^\s*\.home-post-link:hover\s+span\s*\{[^}]*\bcolor\s*:\s*var\(--primary-hover\)\s*;[^}]*\}' "Homepage post hover must use the high-contrast primary color."
+
+Assert-Matches $config '(?m)^\s*-\s+docs/?\s*$' "Jekyll must exclude internal docs from the published site."
 
 Write-Output "PASS: homepage content contract"
