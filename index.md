@@ -25,14 +25,14 @@ layout: default
     <section class="home-section" id="recent-posts" aria-labelledby="recent-posts-title">
         <div class="home-section-heading">
             <h2 id="recent-posts-title">最近文章</h2>
-            <a href="{{ '/archive/' | relative_url }}">查看全部</a>
+            <a href="{{ '/archive/' | relative_url }}" aria-label="查看全部文章">查看全部</a>
         </div>
         <ul class="home-post-list">
             {% for post in site.posts limit: 3 %}
             <li>
                 <a class="home-post-link" href="{{ post.url | relative_url }}">
                     <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
-                    <span>{{ post.title }}</span>
+                    <span>{{ post.title | escape }}</span>
                 </a>
             </li>
             {% endfor %}
