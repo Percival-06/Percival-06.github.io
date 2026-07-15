@@ -12,12 +12,6 @@ layout: default
         <span id="type-text"></span><span class="cursor"></span>
     </p>
     
-    <nav class="minimal-nav">
-        <a href="/archive/">文章</a>
-        <a href="/about/">关于</a>
-        <a href="https://github.com/percival-06" target="_blank">GitHub</a>
-    </nav>
-    
     <!-- 添加的描述文字 -->
     <p class="tagline">记录技术，分享思考，保持好奇</p>
 </div>
