@@ -12,6 +12,8 @@
   --primary-hover: #3f697c;
   --header-background: rgba(252, 252, 253, 0.86);
   --focus-ring: rgba(85, 127, 147, 0.35);
+  --font-sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-editorial: ui-serif, "Noto Serif SC", "Songti SC", STSong, Georgia, serif;
 }
 
 :root[data-theme="dark"] {
@@ -41,7 +43,7 @@ body {
   min-height: 100vh;
   background: var(--background);
   color: var(--foreground);
-  font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: var(--font-sans);
   font-size: 16px;
   line-height: 1.7;
   transition: background-color 180ms ease, color 180ms ease;
@@ -59,34 +61,28 @@ button:focus-visible {
 
 .site-header {
   position: sticky;
-  top: 0.75rem;
+  top: 0;
   z-index: 20;
   display: flex;
-  width: min(calc(100% - 2rem), 920px);
-  min-height: 3.5rem;
-  margin: 0.75rem auto 0;
-  padding: 0.5rem 0.625rem 0.5rem 1rem;
+  width: min(calc(100% - 3rem), 960px);
+  min-height: 4.25rem;
+  margin: 0 auto;
+  padding: 0;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 1.25rem;
   background: var(--header-background);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  box-shadow: 0 8px 24px rgba(24, 24, 27, 0.06);
+  border-bottom: 1px solid var(--border);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-}
-
-:root[data-theme="dark"] .site-header {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
 }
 
 .site-brand {
   flex: 0 0 auto;
   color: var(--foreground);
-  font-size: 1rem;
+  font-family: var(--font-editorial);
+  font-size: 1.1rem;
   font-weight: 700;
-  letter-spacing: 0;
   text-decoration: none;
 }
 
@@ -107,11 +103,10 @@ button:focus-visible {
   min-height: 2.25rem;
   padding: 0.375rem 0.625rem;
   align-items: center;
-  border-radius: 6px;
+  border-radius: 4px;
   color: var(--muted-foreground);
   font-size: 0.875rem;
   font-weight: 500;
-  letter-spacing: 0;
   text-decoration: none;
   transition: color 160ms ease, background-color 160ms ease;
   white-space: nowrap;
@@ -131,7 +126,7 @@ button:focus-visible {
   margin-left: 0.25rem;
   place-items: center;
   border: 0;
-  border-radius: 6px;
+  border-radius: 4px;
   background: transparent;
   color: var(--muted-foreground);
   cursor: pointer;
@@ -166,33 +161,32 @@ button:focus-visible {
 .home-page {
   width: min(100%, 720px);
   margin: 0 auto;
-  padding: 3rem 1.5rem 2.5rem;
+  padding: 2.5rem 1.5rem 3rem;
   animation: fade-in-up 320ms ease both;
 }
 
 .profile-intro {
   display: flex;
-  min-height: min(58vh, 32rem);
-  padding: 2rem 0 3.5rem;
+  padding: 1.25rem 0 2.25rem;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   text-align: center;
 }
 
 .profile-intro h1 {
-  margin-bottom: 0.5rem;
-  font-size: 2.5rem;
+  margin-bottom: 0.45rem;
+  font-family: var(--font-editorial);
+  font-size: clamp(2.25rem, 7vw, 3rem);
   font-weight: 700;
-  letter-spacing: 0;
-  line-height: 1.2;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
 }
 
 .avatar {
-  width: 7rem;
-  height: 7rem;
-  margin-bottom: 1.25rem;
-  padding: 0.25rem;
+  width: 6.75rem;
+  height: 6.75rem;
+  margin-bottom: 1.1rem;
+  padding: 0.2rem;
   border: 1px solid var(--border);
   border-radius: 50%;
   background: var(--surface);
@@ -201,17 +195,17 @@ button:focus-visible {
 
 .profile-role {
   color: var(--muted-foreground);
-  font-size: 1rem;
+  font-size: 0.95rem;
 }
 
 .profile-meta {
   display: flex;
-  margin-top: 0.75rem;
+  margin-top: 0.65rem;
   align-items: center;
   justify-content: center;
   gap: 0.625rem;
   color: var(--muted-foreground);
-  font-size: 0.875rem;
+  font-size: 0.825rem;
 }
 
 .profile-meta a {
@@ -223,16 +217,38 @@ button:focus-visible {
   color: var(--primary-hover);
 }
 
-.home-section {
-  padding: 2.75rem 0;
+.home-intro {
+  padding: 2rem 0 2.5rem;
   border-top: 1px solid var(--border);
 }
 
-.home-section h2 {
-  font-size: 1.25rem;
+.home-eyebrow {
+  margin-bottom: 0.55rem;
+  color: var(--primary-hover);
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.home-intro h2 {
+  max-width: 32rem;
+  font-family: var(--font-editorial);
+  font-size: clamp(1.35rem, 4vw, 1.75rem);
   font-weight: 700;
-  letter-spacing: 0;
+  letter-spacing: -0.02em;
   line-height: 1.4;
+}
+
+.home-intro > p:last-child {
+  max-width: 35rem;
+  margin-top: 0.8rem;
+  color: var(--muted-foreground);
+}
+
+.home-section {
+  padding: 2.5rem 0;
+  border-top: 1px solid var(--border);
 }
 
 .home-section-heading {
@@ -242,9 +258,15 @@ button:focus-visible {
   gap: 1rem;
 }
 
+.home-section-heading h2 {
+  font-family: var(--font-editorial);
+  font-size: 1.35rem;
+  letter-spacing: -0.02em;
+}
+
 .home-section-heading a {
   color: var(--muted-foreground);
-  font-size: 0.875rem;
+  font-size: 0.825rem;
   text-decoration: none;
   transition: color 160ms ease;
 }
@@ -253,17 +275,8 @@ button:focus-visible {
   color: var(--primary-hover);
 }
 
-.home-prose {
-  margin-top: 1rem;
-  color: var(--muted-foreground);
-}
-
-.home-prose p + p {
-  margin-top: 0.5rem;
-}
-
 .home-post-list {
-  margin-top: 1rem;
+  margin-top: 0.8rem;
   list-style: none;
 }
 
@@ -273,68 +286,75 @@ button:focus-visible {
 
 .home-post-link {
   display: grid;
-  min-height: 3.25rem;
-  padding: 0.75rem 0;
-  grid-template-columns: 7rem minmax(0, 1fr);
-  align-items: baseline;
-  gap: 1rem;
+  padding: 1.15rem 0;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 1.5rem;
   text-decoration: none;
 }
 
-.home-post-link time {
+.home-post-copy {
+  display: grid;
+  min-width: 0;
+  gap: 0.35rem;
+}
+
+.home-post-title {
+  font-family: var(--font-editorial);
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+  transition: color 160ms ease, transform 160ms ease;
+}
+
+.home-post-description {
   color: var(--muted-foreground);
-  font-size: 0.8rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.home-post-link time {
+  padding-top: 0.2rem;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
   white-space: nowrap;
 }
 
-.home-post-link span {
-  min-width: 0;
-  font-weight: 550;
-  overflow-wrap: anywhere;
-  transition: color 160ms ease;
-}
-
-.home-post-link:hover span {
+.home-post-link:hover .home-post-title {
   color: var(--primary-hover);
+  transform: translateX(0.2rem);
 }
 
-.education-item {
+.home-footer {
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  color: var(--muted-foreground);
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+.about-page .education-item {
   display: flex;
-  margin-top: 1rem;
+  margin: 0 0 1rem;
   align-items: flex-start;
   justify-content: space-between;
   gap: 1.5rem;
 }
 
-.education-item strong {
+.about-page .education-item strong {
   font-weight: 650;
 }
 
-.education-item p,
-.education-item > span {
+.about-page .education-item p,
+.about-page .education-item > span {
+  margin-bottom: 0;
   color: var(--muted-foreground);
   font-size: 0.875rem;
 }
 
-.education-item > span {
+.about-page .education-item > span {
   flex: 0 0 auto;
-}
-
-.skill-list {
-  margin-top: 1rem;
-  list-style: none;
-}
-
-.skill-list li {
-  font-weight: 550;
-}
-
-.home-footer {
-  padding-top: 2.5rem;
-  border-top: 1px solid var(--border);
-  color: var(--muted-foreground);
-  font-size: 0.8rem;
-  text-align: center;
 }
 
 .page-layout {
@@ -496,22 +516,20 @@ button:focus-visible {
   }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 640px) {
   .site-header {
-    top: 0.5rem;
-    width: calc(100% - 1rem);
-    margin-top: 0.5rem;
-    padding-left: 0.75rem;
-    gap: 0.25rem;
+    width: calc(100% - 2rem);
+    min-height: 3.75rem;
+    gap: 0.5rem;
   }
 
   .site-brand {
-    font-size: 0.925rem;
+    font-size: 1rem;
   }
 
   .site-nav__link {
     padding-inline: 0.45rem;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
   }
 
   .theme-toggle {
@@ -519,28 +537,34 @@ button:focus-visible {
   }
 
   .home-page {
-    padding: 2rem 1.25rem 2rem;
+    padding: 1.5rem 1.25rem 2.5rem;
   }
 
   .profile-intro {
-    min-height: 54vh;
-    padding: 1.5rem 0 3rem;
+    padding: 1rem 0 2rem;
   }
 
-  .profile-intro h1 {
-    font-size: 2.125rem;
+  .avatar {
+    width: 6rem;
+    height: 6rem;
   }
 
+  .home-intro,
   .home-section {
-    padding: 2.25rem 0;
+    padding: 2rem 0;
   }
 
   .home-post-link {
     grid-template-columns: 1fr;
-    gap: 0.2rem;
+    gap: 0.45rem;
   }
 
-  .education-item {
+  .home-post-link time {
+    grid-row: 2;
+    padding-top: 0;
+  }
+
+  .about-page .education-item {
     flex-direction: column;
     gap: 0.35rem;
   }

@@ -13,6 +13,8 @@ $archivePath = Join-Path $projectRoot "archive.md"
 $archive = Get-Content -Raw -Encoding utf8 $archivePath
 $postLayoutPath = Join-Path $projectRoot "_layouts/post.html"
 $postLayout = Get-Content -Raw -Encoding utf8 $postLayoutPath
+$defaultLayoutPath = Join-Path $projectRoot "_layouts/default.html"
+$defaultLayout = Get-Content -Raw -Encoding utf8 $defaultLayoutPath
 
 $postExpectations = @(
     @{
@@ -193,13 +195,19 @@ $styleForChecks = [regex]::Replace(
     ''
 )
 
-Assert-Matches $styleForChecks '(?m)^\s*\.home-page(?![-\w])\s*\{' "Homepage page-shell styles are missing."
-Assert-Matches $styleForChecks '(?m)^\s*\.profile-intro(?![-\w])\s*\{' "Profile introduction styles are missing."
-Assert-Matches $styleForChecks '(?m)^\s*\.home-section(?![-\w])\s*\{' "Homepage section styles are missing."
-Assert-Matches $styleForChecks '(?m)^\s*\.home-post-link(?![-\w])\s*\{' "Recent-post row styles are missing."
-Assert-Matches $styleForChecks '(?m)^\s*\.education-item(?![-\w])\s*\{' "Education styles are missing."
-Assert-Matches $styleForChecks '(?m)^\s*\.skill-list(?![-\w])\s*\{' "Skill styles are missing."
-Assert-Contains $styleForChecks "@media (prefers-reduced-motion: reduce)" "Reduced-motion support must remain available."
+Assert-Contains $defaultLayout '>文章<' "Global navigation must retain the article archive link."
+Assert-Contains $defaultLayout '>关于<' "Global navigation must retain the About link."
+Assert-Contains $defaultLayout 'id="theme-toggle"' "Global theme toggle is missing."
+
+Assert-Matches $styleForChecks '(?m)^\s*--font-editorial\s*:' "Editorial font token is missing."
+Assert-Matches $styleForChecks '(?m)^\s*\.home-intro(?![-\w])\s*\{' "Homepage introduction styles are missing."
+Assert-Matches $styleForChecks '(?m)^\s*\.home-post-link(?![-\w])\s*\{' "Editorial post-row styles are missing."
+Assert-Matches $styleForChecks '(?m)^\s*\.home-post-description(?![-\w])\s*\{' "Post description styles are missing."
+Assert-Matches $styleForChecks '(?m)^\s*\.home-post-link:hover\s+\.home-post-title\s*\{' "Post-title hover styling is missing."
+Assert-Matches $styleForChecks '(?m)^\s*\.about-page\s+\.education-item(?![-\w])\s*\{' "About education styles are missing."
+Assert-Contains $styleForChecks '@media (max-width: 640px)' "Editorial mobile breakpoint is missing."
+Assert-Contains $styleForChecks '@media (prefers-reduced-motion: reduce)' "Reduced-motion support must remain available."
+Assert-NotMatches $styleForChecks '(?m)^\s*\.skill-list(?![-\w])\s*\{' "Homepage-only skill-list styles must be removed."
 
 Assert-NotMatches $styleForChecks '(?m)^\s*\.home-layout(?![-\w])[^\r\n,{]*\{' "Legacy homepage layout styles must be removed."
 Assert-NotMatches $styleForChecks '(?m)^\s*\.typewriter-text(?![-\w])[^\r\n,{]*\{' "Legacy typewriter styles must be removed."
@@ -211,7 +219,7 @@ Assert-NotMatches $styleForChecks '(?m)^\s*@keyframes\s+blink\b\s*\{' "Legacy cu
 
 Assert-Matches $styleForChecks '(?m)^\s*\.profile-meta\s+a:hover\s*\{[^}]*\bcolor\s*:\s*var\(--primary-hover\)\s*;[^}]*\}' "Profile metadata hover must use the high-contrast primary color."
 Assert-Matches $styleForChecks '(?m)^\s*\.home-section-heading\s+a:hover\s*\{[^}]*\bcolor\s*:\s*var\(--primary-hover\)\s*;[^}]*\}' "Homepage section link hover must use the high-contrast primary color."
-Assert-Matches $styleForChecks '(?m)^\s*\.home-post-link:hover\s+span\s*\{[^}]*\bcolor\s*:\s*var\(--primary-hover\)\s*;[^}]*\}' "Homepage post hover must use the high-contrast primary color."
+Assert-Matches $styleForChecks '(?m)^\s*\.home-post-link:hover\s+\.home-post-title\s*\{[^}]*\bcolor\s*:\s*var\(--primary-hover\)\s*;[^}]*\}' "Homepage post hover must use the high-contrast primary color."
 
 Assert-Matches $config '(?m)^\s*-\s+docs/?\s*$' "Jekyll must exclude internal docs from the published site."
 
