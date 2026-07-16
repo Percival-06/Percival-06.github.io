@@ -184,6 +184,7 @@ Assert-Matches $archive 'href\s*=\s*["'']{{\s*''/''\s*\|\s*relative_url\s*}}["''
 Assert-Matches $archive 'href\s*=\s*["'']{{\s*post\.url\s*\|\s*relative_url\s*}}["'']' "Archive post links must respect Jekyll base URLs."
 Assert-Matches $archive '{{\s*post\.title\s*\|\s*escape\s*}}' "Archive post titles must be escaped."
 Assert-Matches $postLayout 'href\s*=\s*["'']{{\s*''/archive/''\s*\|\s*relative_url\s*}}["'']' "Article back link must respect Jekyll base URLs."
+Assert-Matches $postLayout '{{\s*page\.title\s*\|\s*escape\s*}}' "Article titles must be escaped."
 
 $styleForChecks = [regex]::Replace($style, '/\*.*?\*/', '', $regexOptions)
 $styleForChecks = [regex]::Replace(
