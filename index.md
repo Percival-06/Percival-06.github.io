@@ -14,46 +14,38 @@ layout: default
         </div>
     </section>
 
-    <section class="home-section" id="about" aria-labelledby="about-title">
-        <h2 id="about-title">关于</h2>
-        <div class="home-prose">
-            <p>Hi，我是 Percival，北京大学信息科学技术学院 2025 级本科生。</p>
-            <p>在这里记录学习、技术与生活中的思考。</p>
-        </div>
+    <section class="home-intro" id="intro" aria-labelledby="intro-title">
+        <p class="home-eyebrow">你好，我是 Percival</p>
+        <h2 id="intro-title">北京大学信息科学技术学院 2025 级本科生。</h2>
+        <p>记录计算机学习、校园生活，以及沿途真实发生的思考。</p>
     </section>
 
-    <section class="home-section" id="recent-posts" aria-labelledby="recent-posts-title">
+    <section class="home-section home-writing" id="recent-posts" aria-labelledby="recent-posts-title">
         <div class="home-section-heading">
             <h2 id="recent-posts-title">最近文章</h2>
             <a href="{{ '/archive/' | relative_url }}" aria-label="查看全部文章">查看全部</a>
         </div>
         <ul class="home-post-list">
-            {% for post in site.posts limit: 3 %}
+            {% for post in site.posts limit: 5 %}
+            {% assign excerpt_description = post.excerpt | strip_html | strip_newlines | truncate: 72 %}
             <li>
                 <a class="home-post-link" href="{{ post.url | relative_url }}">
+                    <span class="home-post-copy">
+                        <span class="home-post-title">{{ post.title | escape }}</span>
+                        {% if post.description %}
+                        <span class="home-post-description">
+                            {{ post.description | escape }}
+                        </span>
+                        {% elsif excerpt_description != empty %}
+                        <span class="home-post-description">
+                            {{ excerpt_description | escape }}
+                        </span>
+                        {% endif %}
+                    </span>
                     <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
-                    <span>{{ post.title | escape }}</span>
                 </a>
             </li>
             {% endfor %}
-        </ul>
-    </section>
-
-    <section class="home-section" id="education" aria-labelledby="education-title">
-        <h2 id="education-title">教育经历</h2>
-        <div class="education-item">
-            <div>
-                <strong>北京大学</strong>
-                <p>信息科学技术学院 · 本科生</p>
-            </div>
-            <span>2025 - 至今</span>
-        </div>
-    </section>
-
-    <section class="home-section" id="skills" aria-labelledby="skills-title">
-        <h2 id="skills-title">技能</h2>
-        <ul class="skill-list">
-            <li>C++</li>
         </ul>
     </section>
 

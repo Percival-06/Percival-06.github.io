@@ -5,7 +5,7 @@ permalink: /archive/
 ---
 
 <div class="page-layout">
-    <a href="/" class="back-link">← 返回</a>
+    <a href="{{ '/' | relative_url }}" class="back-link">← 返回</a>
     
     <h1>文章</h1>
     
@@ -13,7 +13,7 @@ permalink: /archive/
         {% for post in site.posts %}
         <li>
             <div class="post-meta">{{ post.date | date: "%Y-%m-%d" }}</div>
-            <a href="{{ post.url }}" class="post-link">{{ post.title }}</a>
+            <a href="{{ post.url | relative_url }}" class="post-link">{{ post.title | escape }}</a>
         </li>
         {% endfor %}
     </ul>
