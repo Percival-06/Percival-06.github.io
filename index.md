@@ -32,7 +32,7 @@ layout: default
                 <a class="home-post-link" href="{{ post.url | relative_url }}">
                     <span class="home-post-copy">
                         <span class="home-post-title">{{ post.title | escape }}</span>
-                        {% if post.description %}
+                        {% if post.description and post.description != empty %}
                         <span class="home-post-description">
                             {{ post.description | escape }}
                         </span>

@@ -163,7 +163,7 @@ Assert-Matches $loopBody 'href\s*=\s*["'']{{\s*post\.url\s*\|\s*relative_url\s*}
 Assert-Matches $loopBody 'datetime\s*=\s*["'']{{\s*post\.date\s*\|\s*date_to_xmlschema\s*}}["'']' "Post datetime must use date_to_xmlschema."
 Assert-Matches $loopBody '{{\s*post\.title\s*\|\s*escape\s*}}' "Post titles must be escaped."
 Assert-Matches $loopBody '{%\s*assign\s+excerpt_description\s*=\s*post\.excerpt\s*\|\s*strip_html\s*\|\s*strip_newlines\s*\|\s*truncate:\s*72\s*%}' "Post excerpt fallback must use the approved cleanup filters."
-Assert-Matches $loopBody '{%\s*if\s+post\.description\s*%}.*?{{\s*post\.description\s*\|\s*escape\s*}}.*?{%\s*elsif\s+excerpt_description\s*!=\s*empty\s*%}.*?{{\s*excerpt_description\s*\|\s*escape\s*}}.*?{%\s*endif\s*%}' "Post descriptions must prefer front matter, fall back to a non-empty excerpt, and omit empty descriptions."
+Assert-Matches $loopBody '{%\s*if\s+post\.description\s+and\s+post\.description\s*!=\s*empty\s*%}.*?{{\s*post\.description\s*\|\s*escape\s*}}.*?{%\s*elsif\s+excerpt_description\s*!=\s*empty\s*%}.*?{{\s*excerpt_description\s*\|\s*escape\s*}}.*?{%\s*endif\s*%}' "Post descriptions must prefer non-empty front matter, fall back to a non-empty excerpt, and omit empty descriptions."
 
 Assert-NotMatches $index '<section\b[^>]*\bid\s*=\s*["'']education["'']' "Education must move off the homepage."
 Assert-NotMatches $index '<section\b[^>]*\bid\s*=\s*["'']skills["'']' "Skills must move off the homepage."
