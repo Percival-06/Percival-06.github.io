@@ -220,6 +220,7 @@ button:focus-visible {
 .home-intro {
   padding: 2rem 0 2.5rem;
   border-top: 1px solid var(--border);
+  overflow-wrap: anywhere;
 }
 
 .home-eyebrow {
@@ -419,6 +420,7 @@ button:focus-visible {
 
 .post-content {
   color: var(--foreground);
+  overflow-wrap: anywhere;
 }
 
 .post-content h2,
@@ -478,6 +480,7 @@ button:focus-visible {
 }
 
 .post-content pre {
+  max-width: 100%;
   margin: 1.25rem 0;
   padding: 1rem;
   overflow-x: auto;
@@ -520,6 +523,8 @@ button:focus-visible {
   .site-header {
     width: calc(100% - 2rem);
     min-height: 3.75rem;
+    padding-block: 0.5rem;
+    flex-wrap: wrap;
     gap: 0.5rem;
   }
 
@@ -530,6 +535,11 @@ button:focus-visible {
   .site-nav__link {
     padding-inline: 0.45rem;
     font-size: 0.78rem;
+  }
+
+  .site-nav {
+    flex: 1 1 100%;
+    justify-content: space-between;
   }
 
   .theme-toggle {

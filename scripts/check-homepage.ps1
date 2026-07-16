@@ -207,6 +207,10 @@ Assert-Matches $styleForChecks '(?m)^\s*\.home-post-link:hover\s+\.home-post-tit
 Assert-Matches $styleForChecks '(?m)^\s*\.about-page\s+\.education-item(?![-\w])\s*\{' "About education styles are missing."
 Assert-Contains $styleForChecks '@media (max-width: 640px)' "Editorial mobile breakpoint is missing."
 Assert-Contains $styleForChecks '@media (prefers-reduced-motion: reduce)' "Reduced-motion support must remain available."
+Assert-Matches $styleForChecks '(?m)^\s*\.home-intro(?![-\w])\s*\{[^}]*\boverflow-wrap\s*:\s*anywhere\s*;[^}]*\}' "Homepage introduction must wrap within the viewport."
+Assert-Matches $styleForChecks '(?m)^\s*\.post-content(?![-\w])\s*\{[^}]*\boverflow-wrap\s*:\s*anywhere\s*;[^}]*\}' "Article and About prose must wrap within the viewport."
+Assert-Matches $styleForChecks '(?m)^\s*\.post-content\s+pre(?![-\w])\s*\{[^}]*\bmax-width\s*:\s*100%\s*;[^}]*\boverflow-x\s*:\s*auto\s*;[^}]*\}' "Code blocks must scroll internally without widening the page."
+Assert-Matches $styleForChecks '@media\s*\(max-width:\s*640px\)\s*\{.*?\.site-header(?![-\w])\s*\{[^}]*\bflex-wrap\s*:\s*wrap\s*;[^}]*\}.*?\.site-nav(?![-\w])\s*\{[^}]*\bflex\s*:\s*1\s+1\s+100%\s*;[^}]*\}' "Mobile navigation must wrap intact when horizontal space is constrained."
 Assert-NotMatches $styleForChecks '(?m)^\s*\.skill-list(?![-\w])\s*\{' "Homepage-only skill-list styles must be removed."
 
 Assert-NotMatches $styleForChecks '(?m)^\s*\.home-layout(?![-\w])[^\r\n,{]*\{' "Legacy homepage layout styles must be removed."
