@@ -7,6 +7,35 @@ $stylePath = Join-Path $projectRoot "assets/css/style.scss"
 $style = Get-Content -Raw -Encoding utf8 $stylePath
 $configPath = Join-Path $projectRoot "_config.yml"
 $config = Get-Content -Raw -Encoding utf8 $configPath
+$aboutPath = Join-Path $projectRoot "about.md"
+$about = Get-Content -Raw -Encoding utf8 $aboutPath
+$archivePath = Join-Path $projectRoot "archive.md"
+$archive = Get-Content -Raw -Encoding utf8 $archivePath
+$postLayoutPath = Join-Path $projectRoot "_layouts/post.html"
+$postLayout = Get-Content -Raw -Encoding utf8 $postLayoutPath
+
+$postExpectations = @(
+    @{
+        File = "2026-07-15-大一下小结.md"
+        Title = "title: `"大一下小结`""
+        Description = "description: `"回顾大一下学期，也为接下来的学习做一个简单总结。`""
+    },
+    @{
+        File = "2026-02-16-2025年终总结.md"
+        Title = "title: `"2025年终总结`""
+        Description = "description: `"回顾高考、暑假与大学新生活，并为新一年梳理方向。`""
+    },
+    @{
+        File = "2026-02-09-大一上小结.md"
+        Title = "title: `"大一上小结`""
+        Description = "description: `"回顾从高中到大学的适应、学习方法与对差距的重新认识。`""
+    },
+    @{
+        File = "2026-02-05-第一篇.md"
+        Title = "title: `"第一篇`""
+        Description = "description: `"博客的开场：记录学习、技术与生活，并持续分享随笔与心得。`""
+    }
+)
 $regexOptions = [System.Text.RegularExpressions.RegexOptions]::IgnoreCase -bor
     [System.Text.RegularExpressions.RegexOptions]::Singleline
 
@@ -111,35 +140,50 @@ Assert-Matches $profile '<img\b(?=[^>]*\bsrc\s*=\s*["'']{{\s*''/assets/images/av
 Assert-Matches $profile '<h1\b[^>]*\bid\s*=\s*["'']profile-name["''][^>]*>\s*Percival\s*</h1>' "Profile name is missing."
 Assert-Contains $profile '开发者 / 创作者 / 终身学习者' "Profile role is missing."
 Assert-Contains $profile '北京' "Profile location is missing."
-Assert-Matches $profile '<a\b[^>]*href\s*=\s*["'']https://github\.com/percival-06["''][^>]*>\s*GitHub\s*</a>' "Profile GitHub link is missing."
+Assert-Matches $profile '<a\b(?=[^>]*href\s*=\s*["'']https://github\.com/percival-06["''])(?=[^>]*target\s*=\s*["'']_blank["''])(?=[^>]*rel\s*=\s*["'']noopener noreferrer["''])[^>]*>\s*GitHub\s*</a>' "Profile GitHub link is missing safe external-link attributes."
 
-$about = Get-SectionById $index 'about'
-Assert-Contains $about '北京大学信息科学技术学院 2025 级本科生' "About education content is missing."
-Assert-Contains $about '在这里记录学习、技术与生活中的思考。' "About introduction is missing."
+$intro = Get-SectionById $index 'intro'
+Assert-Contains $intro '北京大学信息科学技术学院 2025 级本科生' "Homepage identity introduction is missing."
+Assert-Contains $intro '记录计算机学习、校园生活，以及沿途真实发生的思考。' "Homepage writing statement is missing."
 
 $recentPosts = Get-SectionById $index 'recent-posts'
 Assert-Matches $recentPosts '<h2\b[^>]*>\s*最近文章\s*</h2>' "Recent posts heading is missing."
-Assert-Matches $recentPosts '<a\b(?=[^>]*\bhref\s*=\s*["'']{{\s*''/archive/''\s*\|\s*relative_url\s*}}["''])(?=[^>]*\baria-label\s*=\s*["'']查看全部文章["''])[^>]*>\s*查看全部\s*</a>' "Archive link must retain its text and have an accessible label."
+Assert-Matches $recentPosts '<a\b(?=[^>]*\bhref\s*=\s*["'']{{\s*''/archive/''\s*\|\s*relative_url\s*}}["''])(?=[^>]*\baria-label\s*=\s*["'']查看全部文章["''])[^>]*>\s*查看全部\s*</a>' "Archive link is missing or unsafe."
 
-$loopPattern = '{%-?\s*for\s+post\s+in\s+site\.posts\s+limit\s*:\s*3\s*-?%}(?<Body>.*?){%-?\s*endfor\s*-?%}'
+$loopPattern = '{%-?\s*for\s+post\s+in\s+site\.posts\s+limit\s*:\s*5\s*-?%}(?<Body>.*?){%-?\s*endfor\s*-?%}'
 $loopMatch = [regex]::Match($recentPosts, $loopPattern, $regexOptions)
 if (-not $loopMatch.Success) {
-    throw "Recent posts must use a three-post Jekyll loop."
+    throw "Recent posts must use a five-post Jekyll loop."
 }
 
 $loopBody = $loopMatch.Groups['Body'].Value
 Assert-Matches $loopBody 'href\s*=\s*["'']{{\s*post\.url\s*\|\s*relative_url\s*}}["'']' "Post links must respect Jekyll base URLs."
 Assert-Matches $loopBody 'datetime\s*=\s*["'']{{\s*post\.date\s*\|\s*date_to_xmlschema\s*}}["'']' "Post datetime must use date_to_xmlschema."
-Assert-Matches $loopBody '>\s*{{\s*post\.date\s*\|\s*date:\s*["'']%Y-%m-%d["'']\s*}}\s*</time>' "Visible post date must format post.date."
 Assert-Matches $loopBody '{{\s*post\.title\s*\|\s*escape\s*}}' "Post titles must be escaped."
+Assert-Matches $loopBody '{%\s*assign\s+excerpt_description\s*=\s*post\.excerpt\s*\|\s*strip_html\s*\|\s*strip_newlines\s*\|\s*truncate:\s*72\s*%}' "Post excerpt fallback must use the approved cleanup filters."
+Assert-Matches $loopBody '{%\s*if\s+post\.description\s*%}.*?{{\s*post\.description\s*\|\s*escape\s*}}.*?{%\s*elsif\s+excerpt_description\s*!=\s*empty\s*%}.*?{{\s*excerpt_description\s*\|\s*escape\s*}}.*?{%\s*endif\s*%}' "Post descriptions must prefer front matter, fall back to a non-empty excerpt, and omit empty descriptions."
 
-$education = Get-SectionById $index 'education'
-Assert-Contains $education '北京大学' "Education institution is missing."
-Assert-Contains $education '信息科学技术学院 · 本科生' "Education program is missing."
-Assert-Contains $education '2025 - 至今' "Education dates are missing."
+Assert-NotMatches $index '<section\b[^>]*\bid\s*=\s*["'']education["'']' "Education must move off the homepage."
+Assert-NotMatches $index '<section\b[^>]*\bid\s*=\s*["'']skills["'']' "Skills must move off the homepage."
 
-$skills = Get-SectionById $index 'skills'
-Assert-Matches $skills '<li\b[^>]*>\s*C\+\+\s*</li>' "C++ skill is missing."
+Assert-Contains $about '北京大学' "About education institution is missing."
+Assert-Contains $about '信息科学技术学院 · 本科生' "About education program is missing."
+Assert-Contains $about '2025 - 至今' "About education dates are missing."
+Assert-Matches $about '<h2\b[^>]*>\s*技能\s*</h2>.*?<li\b[^>]*>\s*C\+\+\s*</li>' "About must retain the C++ skill."
+Assert-Contains $about 'Keep calm and carry on' "About motto is missing."
+Assert-Contains $about '66265381@qq.com' "About email is missing."
+
+foreach ($expectation in $postExpectations) {
+    $postPath = Join-Path (Join-Path $projectRoot "_posts") $expectation.File
+    $post = Get-Content -Raw -Encoding utf8 $postPath
+    Assert-Contains $post $expectation.Title "Expected title is missing from $($expectation.File)."
+    Assert-Contains $post $expectation.Description "Expected description is missing from $($expectation.File)."
+}
+
+Assert-Matches $archive 'href\s*=\s*["'']{{\s*''/''\s*\|\s*relative_url\s*}}["'']' "Archive back link must respect Jekyll base URLs."
+Assert-Matches $archive 'href\s*=\s*["'']{{\s*post\.url\s*\|\s*relative_url\s*}}["'']' "Archive post links must respect Jekyll base URLs."
+Assert-Matches $archive '{{\s*post\.title\s*\|\s*escape\s*}}' "Archive post titles must be escaped."
+Assert-Matches $postLayout 'href\s*=\s*["'']{{\s*''/archive/''\s*\|\s*relative_url\s*}}["'']' "Article back link must respect Jekyll base URLs."
 
 $styleForChecks = [regex]::Replace($style, '/\*.*?\*/', '', $regexOptions)
 $styleForChecks = [regex]::Replace(
